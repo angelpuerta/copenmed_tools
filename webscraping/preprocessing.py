@@ -1,7 +1,8 @@
 import nltk
+from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.tokenize import wordpunct_tokenize
-from nltk.corpus import stopwords
+
 nltk.download('stopwords')
 
 def preprocess_text(lines):

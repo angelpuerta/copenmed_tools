@@ -5,7 +5,7 @@ Created on Tue Jan 12 17:17:27 2021
 @author: coss
 """
 
-from copenmed_tools.python.copenmed_tools import *
+from app.utils.copenmed_tools import *
 
 class Checker():
     def __init__(self, fnPickle="copenmed.pkl", debug=False):

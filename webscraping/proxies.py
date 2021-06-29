@@ -1,7 +1,6 @@
-from lxml.html import fromstring
 import requests
+from lxml.html import fromstring
 
-import traceback
 
 def get_proxies():
     url = 'https://free-proxy-list.net/'

@@ -5,8 +5,7 @@ Created on Wed Jan 13 18:18:53 2021
 @author: coss
 """
 
-import numpy as np
-from copenmed_tools.python.copenmed_tools import *
+from copenmed_tools import *
 from reasonerCOSS_0003 import Reasoner0003
 
 class Summarizer():
@@ -68,7 +67,7 @@ class Summarizer():
             return ""
     
     def getDelta(self, idEntity):
-        x = np.zeros(self.reasoner.graph.getNodeMax()+1)
+        x = np.zeros(self.reasoner.graph.getNodeMax() + 1)
         x[idEntity]=1
         return x
     
@@ -288,7 +287,7 @@ class Summarizer():
             return self.summarize1(idEntity, "RISK")
         return "Tipo no conocido"
 
-summarizer = Summarizer(Reasoner0003())
+summarizer = Summarizer(Reasoner0003(debug=True))
 print(summarizer.summarize(503)) # Sintoma
 #print(summarizer.summarize(11)) # Enfermedad
 #print(summarizer.summarize(111)) # Grupo de enfermedades

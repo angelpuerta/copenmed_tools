@@ -10,8 +10,10 @@
 
 import argparse
 import os
-from downloader import download_text
+
 from check_resource import check_resource_retrieved_before
+from downloader import download_text
+
 #import numpy as np
 
 try: 

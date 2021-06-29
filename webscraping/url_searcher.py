@@ -8,16 +8,14 @@
 
 import argparse
 import os
-import pandas as pd
-import random
-from searcher import google_search
 from time import perf_counter
 
+import pandas as pd
+
 from check_resource import check_resource_retrieved_before
+from downloader import download_text
 from searcher import search_only
 from searcher import urls2doc
-from downloader import download_text
-
 
 ## CAN BE ESTABLISHED BY THE USER ##
 

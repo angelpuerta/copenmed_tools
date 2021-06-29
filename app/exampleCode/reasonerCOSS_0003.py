@@ -6,13 +6,16 @@ Created on Mon Dec  7 12:38:31 2020
 """
 
 import codecs
-import numpy as np
 import os
-import pandas as pd
 import pickle
 import sys
-from copenmed_tools.python.copenmed_tools import load_database, Graph,\
+
+import numpy as np
+import pandas as pd
+
+from app.utils.copenmed_tools import load_database, Graph, \
     separate_entities_by_type, add_directional_edges, COpenMedReasoner
+
 
 class Reasoner0003(COpenMedReasoner):
     def __init__(self, fnPickle="", debug=False):

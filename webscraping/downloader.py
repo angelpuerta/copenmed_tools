@@ -9,29 +9,26 @@
 
 # Dependencies are nltk, BeautifulSoup, sklearn, pandas
 
-# IMPORTS 
-import requests
-import re
-import glob
 import os
+import re
 import sys
-import traceback
-import numpy as np
-import pandas as pd
-import unicodedata
 import time
-import random
-from bs4 import BeautifulSoup
+import traceback
 from itertools import cycle
 
+import numpy as np
+import pandas as pd
+# IMPORTS
+import requests
+import unicodedata
+from bs4 import BeautifulSoup
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from nltk.tokenize import wordpunct_tokenize
+from tika import parser  # pip install tika
 
 from check_resource import check_resource_retrieved_before
 from preprocessing import preprocess_text
 from proxies import get_proxies
-from tika import parser # pip install tika
 
 ##########################
 #    Static variables    #

@@ -1,9 +1,11 @@
 import copy
 import os
-import numpy as np
-import pandas as pd
 import pickle
 import sys
+
+import numpy as np
+import pandas as pd
+
 
 def make_dict(sheetName, varName, multiple=False):
     if not os.path.exists(fnExcel):
