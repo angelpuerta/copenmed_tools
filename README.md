@@ -7,7 +7,7 @@ Tool used to create the graph provided by the [CopenMed](http://copenmed.org/) o
 The libraries for this project can be found on **requirements.yaml**.
 Install them via :
 ```
-conda env create --file requirements.yaml
+conda env create --file requirements.yml
 ```
 
 ## How to run

@@ -1,8 +1,13 @@
 from enum import Enum
+from os import path
+
+from app.definitions import ROOT_DIR
 
 EDGE_THRESHOLD = 0.25
 WEIGHTS_THRESHOLD = 1e-4
 DEFAULT_DEPTH = 2
+PICKLED_PATH = path.abspath(path.join(ROOT_DIR, "data/reasoner.pkl"))
+
 
 
 class RelationshipGraph(Enum):
@@ -25,3 +30,6 @@ class WeightsColumns(Enum):
     WUP_1 = 4
     WUP_2 = 5
 
+class EdgeType(Enum):
+    INCOMING = 1
+    OUTCOMING = 2

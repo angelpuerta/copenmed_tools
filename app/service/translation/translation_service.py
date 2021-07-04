@@ -1,4 +1,5 @@
 from app.service.load.load_database.COpenMedObject import COpenMedObject
+from app.service.load.load_database.excel_database import ExcelDatabaseLoader
 from app.service.translation.translation_config import RelationshipType, EntityMap, relationship_supertype_translation
 from app.utils.singleton import singleton
 
@@ -8,7 +9,8 @@ class TranslationService:
     _database: COpenMedObject
 
     def __init__(self):
-        self._database = COpenMedObject()
+        loader = ExcelDatabaseLoader()
+        self._database = loader.load_database()
 
     def translate_relationship_type(self, relationship_id) -> str:
         index = self._database.edge_type[RelationshipType.RELATIONSHIP_ID] == relationship_id

@@ -1,11 +1,12 @@
 from enum import Enum
 
-from app.service.load.load_relationships.relationship_config import RelationShips
+from app.service.load.load_weights.weights_config import RelationShips
 
 
 class EntityMap(Enum):
     ENTITY_ID = 0
     ENTITY_LABEL = 1
+    ENTITY_TYPE = 2
 
 
 class RelationshipType(Enum):

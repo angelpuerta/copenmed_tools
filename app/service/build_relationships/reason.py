@@ -1,6 +1,7 @@
 import networkx as nx
 from networkx.readwrite import json_graph;
 
+from app.service.build_relationships.graph_config import EdgeType
 from app.service.translation.translation_service import TranslationService
 
 
@@ -9,12 +10,16 @@ class Reason:
     translation_service: TranslationService
     source_node: int
     reason_label: str
+    _paths: list
 
-    def __init__(self, edges: dict,
+    def __init__(self, graph: nx.DiGraph,
                  source_node: int,
-                 reason: str):
+                 reason: str,
+                 paths: list):
         self.reason = reason
-        self._graph = nx.DiGraph(edges)
+        self._graph = graph
+        paths.sort(key=lambda path: path['weight'], reverse=True)
+        self._paths = paths
         self.source_node = source_node
         self.translation_service = TranslationService()
         nx.set_node_attributes(self._graph, {self.source_node: {type: "source"}})
@@ -44,26 +49,37 @@ class Reason:
         auxiliar_graph = json_graph.node_link_data(self._graph)
         graph = {}
         graph['label'] = self.reason_label
-        graph['nodes'] = {value["id"] : {"label": value["label"]} for value in auxiliar_graph['nodes']}
-        graph['edges'] = [{"source": value["source"], "label": value["label"],  "target": value["target"], "directed": True, "weight": value["weight"] } for value in auxiliar_graph['links']]
-        return {"graph" : graph}
+        graph['nodes'] = {value["id"]: {"label": value["label"]} for value in auxiliar_graph['nodes']}
+        graph['edges'] = [
+            {"source": value["source"], "label": value["label"], "target": value["target"], "directed": True,
+             "weight": value["weight"]} for value in auxiliar_graph['links']]
+        graph['paths'] = [{'target': path['target'], 'weight': path['weight'],
+                          'type': 'incoming' if path['type'] == EdgeType.INCOMING else 'outcoming',
+                          'path': self.repr_path(path)
+                          } for path in self._paths]
+        return {"graph": graph}
+
+    def repr_path(self, path):
+        return [{'from': edge['edge'][0], 'to': edge['edge'][1], 'weight': edge['weight'],
+          'weight_rule': edge['weight_rule']} for edge in path['path']]
 
     def __repr__(self):
         chain = "For " + self.reason_label + "\n"
-        successors = nx.bfs_successors(self._graph, self.source_node)
-        for init_node, nodes in successors:
-            for node in nodes:
-                chain += "\t For " + self._print_node(node) + " :" + "\n"
-                for path in self.get_paths_to(node):
-                    chain += "\t"
-                    for nodeTo, nodeFrom in path:
-                        chain += self._print_node(nodeTo)
-                        chain += " --> "
-                        chain += self._print_path(nodeTo, nodeFrom)
-                    chain += " --> "
-                    chain += self._print_node(node)
-                chain += "\n"
-        return chain
+        for path in self._paths:
+            chain += "For " + self._print_node(path['target']) + " :" + "\n"
+            chain += "\t"
+            for edge in path['path']:
+                node_from = edge['edge'][0]
+                node_to = edge['edge'][1]
+                chain += self._print_node(node_from)
+                chain += " --> "
+                chain += self._print_path(node_from, node_to)
+                chain += " --> "
+            if path['type'] == EdgeType.INCOMING:
+                chain += self._print_node(path['target'])+"\n"
+            else:
+                chain += self._print_node(self.source_node)+"\n"
+        return chain + "\n"
 
     def _print_node(self, node):
         return "( " + str(node) + " : " + self._graph.nodes[node]['label'] + " )"

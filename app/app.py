@@ -1,19 +1,15 @@
 from flask import Flask
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
-from app.service.build_relationships.edges import Edges
-from app.service.load.load_database.COpenMedObject import COpenMedObject
-from app.service.load.load_relationships.excel_relationship import ExcelRelationShipLoader
+from app.service.build_relationships.build_reasons_impl import ReasonBuilderImpl
+from app.service.build_relationships.relations import Relations
 
-database = COpenMedObject()
-relation_loader = ExcelRelationShipLoader()
-relation = relation_loader.load_database()
-graph = Edges(database.edge, relation)
+relations_builder = ReasonBuilderImpl()
+relations : Relations = relations_builder.build()
 
 app = Flask(__name__)
 cors = CORS(app)
-
-
+print("App ready")
 
 @app.route('/ping', methods=['GET'])
 def index():
@@ -22,6 +18,6 @@ def index():
 
 @app.route('/relationships/<node>', methods=['GET'])
 def info_node(node):
-    successor = graph.evaluate_succesors(int(node))
-    successor.build_successors()
-    return successor.to_json()
+    reasons = relations.evaluate_node(int(node))
+    reasons.make_explanation()
+    return reasons.to_json()
