@@ -1,0 +1,39 @@
+<mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{target}}
+      </mat-panel-title>
+      <mat-panel-description>
+        <button mat-mini-fab color="accent" aria-label="Example icon button with a bookmark icon">
+            <p>{{weight | number: '1.1-2'}}</p>
+        </button>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <table>
+      <tr>
+        <th>{{target}}</th>
+        <th class="secondary">Base</th>
+        <th class="secondary">Ponderado</th>
+        <th class="secondary">Resultado</th>
+      </tr>
+      <ng-container *ngFor="let path of paths">
+        <tr>
+          <td><span>
+            <mat-icon>subdirectory_arrow_right</mat-icon>
+            {{translateEdges(path.from , path.to).label}}</span></td>
+          <td>{{translateEdges(path.from , path.to).weight | number: '1.1-2'}}</td>
+          <td>{{path.weight_rule | number: '1.1-2'}}</td>
+          <td>{{path.weight | number: '1.1-2'}}</td>
+        </tr>
+        <tr>
+          <td>{{translateNode(path.to)}}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </ng-container>
+    </table>
+  </mat-expansion-panel>
+</mat-accordion>

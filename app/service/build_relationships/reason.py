@@ -49,18 +49,18 @@ class Reason:
         auxiliar_graph = json_graph.node_link_data(self._graph)
         graph = {}
         graph['label'] = self.reason_label
-        graph['nodes'] = {value["id"]: {"label": value["label"]} for value in auxiliar_graph['nodes']}
+        graph['nodes'] = {int(value["id"]): {"label": value["label"]} for value in auxiliar_graph['nodes']}
         graph['edges'] = [
-            {"source": value["source"], "label": value["label"], "target": value["target"], "directed": True,
+            {"source": int(value["source"]), "label": value["label"], "target": int(value["target"]), "directed": True,
              "weight": value["weight"]} for value in auxiliar_graph['links']]
-        graph['paths'] = [{'target': path['target'], 'weight': path['weight'],
+        graph['paths'] = [{'target': int(path['target']), 'weight': path['weight'],
                           'type': 'incoming' if path['type'] == EdgeType.INCOMING else 'outcoming',
                           'path': self.repr_path(path)
                           } for path in self._paths]
         return {"graph": graph}
 
     def repr_path(self, path):
-        return [{'from': edge['edge'][0], 'to': edge['edge'][1], 'weight': edge['weight'],
+        return [{'from': int(edge['edge'][0]), 'to': int(edge['edge'][1]), 'weight': edge['weight'],
           'weight_rule': edge['weight_rule']} for edge in path['path']]
 
     def __repr__(self):

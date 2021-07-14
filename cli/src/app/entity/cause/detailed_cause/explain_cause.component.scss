@@ -1,0 +1,32 @@
+.mat-expansion-panel-header-title{
+    width: 90%;
+}
+
+.mat-expansion-panel-header-description{
+    align-self: center;
+}
+
+.mat-expansion-panel-header{
+    min-height: 70px;
+}
+
+.mat-mini-fab{
+    border-radius: 5px;
+}
+
+table{
+
+    tr{
+        width: 100%;
+        padding-bottom: 10px;
+    }
+
+    th{
+        text-align: left;
+    }
+
+    .secondary{
+        width: 8.33%;
+    }
+
+}

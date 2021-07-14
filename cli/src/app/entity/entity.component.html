@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="modal">
+        <copenmed-cause *ngIf="selectedCause; else cause_list"
+        [sourceLabel]="sourceLabel"
+        [causeLabel] = "selectedCause"
+        [cause] = "selectedCauseGraph()"
+        (unselectCause) = "deselectCause()"
+        ></copenmed-cause>
+        
+        <ng-template #cause_list>
+            <copenmed-cause-list 
+            [sourceLabel]="sourceLabel"
+            [causes]="getCauses()"
+            (selectedCause)="selectCause($event)">
+            </copenmed-cause-list>
+        </ng-template>
+    </div>
+</div>

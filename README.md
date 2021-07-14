@@ -18,3 +18,13 @@ cd app
 ```
 
 The application by default starts on port 5000 (http://localhost:5000/). 
+
+The client uses **angular** to run it:
+
+```
+cd cli
+ng serve --open 
+```
+
+The client by default will launch on port 4200 (http://localhost:4200/)
+

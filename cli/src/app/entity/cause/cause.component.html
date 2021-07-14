@@ -1,0 +1,15 @@
+<div>
+    <mat-toolbar>
+        <span class="centered"><a class="back" (click)="unselect()">{{sourceLabel}}</a>
+        <mat-icon >chevron_right</mat-icon>
+        {{causeLabel}}
+        </span>
+    </mat-toolbar>
+        <copenmed-explain-cause *ngFor="let explanation of explanations"
+        [explanation] = "explanation"
+        [edges] = "edges"
+        [nodes] = "nodes"
+        >
+    </copenmed-explain-cause>
+
+</div>

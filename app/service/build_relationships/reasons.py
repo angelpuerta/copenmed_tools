@@ -6,11 +6,13 @@ import networkx as nx
 from app.service.build_relationships.graph_config import WEIGHTS_THRESHOLD, EDGE_THRESHOLD, EdgeType
 from app.service.build_relationships.reason import Reason
 from app.service.load.load_weights.weights import Weights
+from app.service.translation.translation_service import TranslationService
 
 
 class Reasons:
+
+    translation_service: TranslationService
     source_node: int
-    depth: int
     weights_threshold: float
     edges_threshold: float
     _weights: Weights
@@ -26,6 +28,8 @@ class Reasons:
         self.weights_threshold = weights_threshold
         self.edges_threshold = edges_threshold
         self.reasons = {}
+        self.translation_service = TranslationService()
+
 
     def make_explanation(self):
         successors_func = self._graph.successors
@@ -100,5 +104,6 @@ class Reasons:
 
     def to_json(self) -> dict:
         json = {}
+        json["label"] = self.translation_service.translate_entity(self.source_node)
         json["graphs"] = [value.to_json() for value in self.reasons.values()]
         return json

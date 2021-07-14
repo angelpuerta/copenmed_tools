@@ -1,0 +1,10 @@
+<div>
+<mat-toolbar>
+    <span>{{sourceLabel}}</span>
+</mat-toolbar>
+    <mat-action-list>
+        <button mat-list-item *ngFor="let cause of causes" (click)="explainCause(cause)">
+            {{cause}}
+        </button>
+    </mat-action-list>
+</div>
